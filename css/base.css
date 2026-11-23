@@ -1,0 +1,171 @@
+/* ===== Переменные: цвета и размеры в одном месте ===== */
+:root {
+  --color-bg: #14121c;
+  --color-bg-glow: #2a2340;
+  --color-surface: #221f2e;
+  --color-border: #3a3550;
+  --color-text: #ece8f5;
+  --color-text-muted: #9a93b0;
+  --color-text-on-accent: #1a1408;
+  --color-accent: #e0a83c;
+  --color-accent-hover: #f0bc55;
+
+  --color-fire: #e2583e;
+  --color-water: #3e8fe2;
+  --color-nature: #4fb257;
+
+  --radius: 12px;
+  --gap: 16px;
+}
+
+/* ===== Сброс и основа ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: radial-gradient(circle at top, var(--color-bg-glow), var(--color-bg) 70%);
+  background-attachment: fixed;
+}
+
+#game {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--gap);
+}
+
+/* ===== Экраны: виден только активный ===== */
+.screen {
+  display: none;
+}
+
+.screen--active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap);
+  min-height: calc(100vh - 2 * var(--gap));
+}
+
+#menu-screen,
+#result-screen {
+  justify-content: center;
+  text-align: center;
+}
+
+/* ===== Заголовки ===== */
+.title {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, var(--color-fire), var(--color-nature), var(--color-water));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.subtitle,
+.result__text {
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+}
+
+.result__title {
+  font-size: 3rem;
+}
+
+/* ===== Кнопки ===== */
+.menu-buttons {
+  display: flex;
+  gap: var(--gap);
+  margin-top: var(--gap);
+}
+
+.btn {
+  padding: 12px 28px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+}
+
+.btn--primary {
+  color: var(--color-text-on-accent);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.btn--primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== Панель состояния (HUD) ===== */
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.hud__item {
+  padding: 8px 14px;
+  font-weight: 600;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* ===== Стол, Триада и рука ===== */
+.board {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--gap);
+  width: 100%;
+}
+
+.mob-queue,
+.triad {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  min-height: 32px;
+}
+
+.mobs,
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap);
+  width: 100%;
+  min-height: 180px;
+  padding: var(--gap);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+}
+
+.mobs {
+  flex: 1;
+}
