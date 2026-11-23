@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,47 @@
   <link rel="stylesheet" href="css/base.css">
 </head>
 <body>
-  <main id="game"></main>
+  <main id="game">
+    <section class="screen screen--active" id="menu-screen">
+      <h1 class="title">Cards of Triad</h1>
+      <p class="subtitle">Пройди три волны мобов, используя силу трёх стихий</p>
+      <div class="menu-buttons">
+        <button class="btn btn--primary" id="play-button" type="button">Играть</button>
+        <button class="btn" id="rules-button" type="button">Правила</button>
+      </div>
+    </section>
+
+    <section class="screen" id="game-screen">
+      <header class="hud">
+        <div class="hud__item">❤️ <span id="player-hp">–</span></div>
+        <div class="hud__item">🛡️ <span id="player-armor">–</span></div>
+        <div class="hud__item">⚡ <span id="player-energy">–</span></div>
+        <div class="hud__item">Волна <span id="wave-number">–</span></div>
+        <div class="hud__item">Колода <span id="deck-count">–</span></div>
+      </header>
+
+      <div class="board">
+        <div class="mob-queue" id="mob-queue"></div>
+        <div class="mobs" id="mobs"></div>
+      </div>
+
+      <div class="triad" id="triad"></div>
+      <div class="hand" id="hand"></div>
+
+      <button class="btn btn--primary" id="end-turn-button" type="button">Конец хода</button>
+    </section>
+
+    <section class="screen" id="result-screen">
+      <h2 class="result__title" id="result-title"></h2>
+      <p class="result__text" id="result-text"></p>
+      <div class="menu-buttons">
+        <button class="btn btn--primary" id="restart-button" type="button">Сыграть ещё</button>
+        <button class="btn" id="menu-button" type="button">В меню</button>
+      </div>
+    </section>
+
+  </main>
+
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
