@@ -1,0 +1,15 @@
+# Настройки редакторов
+.vscode/
+.idea/
+
+# Системные файлы Windows и macOS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Зависимости и логи Node.js, если когда-нибудь появятся
+node_modules/
+npm-debug.log*
+
+# Локальные секреты
+.env
