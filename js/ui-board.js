@@ -1,5 +1,9 @@
-import { config } from './config.js'
+import { config, elements } from './config.js'
 import { waves } from './mobs.js'
+import { createElement } from './dom.js'
+
+const mobsElement = document.querySelector('#mobs')
+const queueElement = document.querySelector('#mob-queue')
 
 const hud = {
   health: document.querySelector('#player-hp'),
@@ -15,4 +19,47 @@ export const renderHud = (state) => {
   hud.energy.textContent = `${state.energy}/${config.energyPerTurn}`
   hud.wave.textContent = `${state.waveIndex + 1}/${waves.length}`
   hud.deck.textContent = state.deck.drawPile.length
+}
+
+const createHealthBar = (mob) => {
+  const healthBar = createElement('span', 'mob__health-bar')
+  const healthFill = createElement('span', 'mob__health-fill')
+  healthFill.style.width = `${(mob.health / mob.maxHealth) * 100}%`
+  healthBar.append(healthFill)
+
+  return healthBar
+}
+
+const createMobElement = (mob) => {
+  const mobElement = createElement('button', 'mob')
+  mobElement.type = 'button'
+  mobElement.dataset.id = mob.id
+  mobElement.dataset.element = mob.element
+  mobElement.classList.toggle('mob--boss', Boolean(mob.isBoss))
+
+  mobElement.append(
+    createElement('span', 'mob__element', elements[mob.element].icon),
+    createElement('span', 'mob__name', mob.name),
+    createHealthBar(mob),
+    createElement('span', 'mob__stats', `❤️ ${mob.health}/${mob.maxHealth}  ⚔️ ${mob.attack}`),
+  )
+
+  return mobElement
+}
+
+export const renderMobs = (state) => {
+  const mobElements = state.table.map((mob) => createMobElement(mob))
+  mobsElement.replaceChildren(...mobElements)
+}
+
+export const renderQueue = (state) => {
+  const queueItems = state.queue.map((mob) => {
+    const item = createElement('span', 'queue-mob', elements[mob.element].icon)
+    item.dataset.element = mob.element
+    item.title = mob.name
+
+    return item
+  })
+
+  queueElement.replaceChildren(...queueItems)
 }

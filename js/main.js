@@ -1,6 +1,6 @@
 import { showScreen } from './screens.js'
 import { startGame, getState } from './game.js'
-import { renderHud } from './ui-board.js'
+import { renderHud, renderMobs, renderQueue } from './ui-board.js'
 import { renderHand } from './ui-cards.js'
 
 const playButton = document.querySelector('#play-button')
@@ -11,6 +11,10 @@ const render = () => {
   const state = getState()
 
   renderHud(state)
+
+  renderMobs(state)
+
+  renderQueue(state)
 
   renderHand(state)
 }

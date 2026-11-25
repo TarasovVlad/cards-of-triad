@@ -78,3 +78,76 @@
   font-size: 1.2rem;
   font-weight: 700;
 }
+
+/* ===== Моб на столе ===== */
+.mob {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: calc(var(--card-width) * 1.3);
+  padding: 16px 12px;
+  font: inherit;
+  color: var(--color-text);
+  background: linear-gradient(160deg, var(--color-surface), var(--color-bg));
+  border: 2px solid var(--element-color);
+  border-radius: var(--radius);
+  cursor: default;
+}
+
+.mob--boss {
+  width: calc(var(--card-width) * 1.7);
+  border-width: 3px;
+  box-shadow: 0 0 24px var(--element-color);
+}
+
+.mob__element {
+  font-size: 2.5rem;
+}
+
+.mob--boss .mob__element {
+  font-size: 3.5rem;
+}
+
+.mob__name {
+  font-weight: 700;
+}
+
+.mob__health-bar {
+  display: block;
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  background: var(--color-bg);
+  border-radius: 4px;
+}
+
+.mob__health-fill {
+  display: block;
+  height: 100%;
+  background: var(--color-nature);
+  transition: width 0.3s;
+}
+
+.mob__stats {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: pre;
+}
+
+/* ===== Очередь мобов ===== */
+.mob-queue:not(:empty)::before {
+  content: 'Очередь:';
+  align-self: center;
+  color: var(--color-text-muted);
+}
+
+.queue-mob {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-surface);
+  border: 2px solid var(--element-color);
+  border-radius: 50%;
+}
