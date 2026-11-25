@@ -4,12 +4,14 @@ import { createElement } from './dom.js'
 
 const handElement = document.querySelector('#hand')
 
-const createCardElement = (card) => {
+const createCardElement = (card, state) => {
   const cardElement = createElement('button', 'card')
   cardElement.type = 'button'
   cardElement.dataset.id = card.id
   cardElement.dataset.element = card.element
   cardElement.dataset.type = card.type
+  cardElement.disabled = card.cost > state.energy
+  cardElement.classList.toggle('card--selected', card.id === state.selectedCardId)
 
   cardElement.append(
     createElement('span', 'card__cost', card.cost),
@@ -23,6 +25,16 @@ const createCardElement = (card) => {
 }
 
 export const renderHand = (state) => {
-  const cardElements = state.deck.hand.map((card) => createCardElement(card))
+  const cardElements = state.deck.hand.map((card) => createCardElement(card, state))
   handElement.replaceChildren(...cardElements)
+}
+
+export const onCardClick = (handler) => {
+  handElement.addEventListener('click', (event) => {
+    const cardElement = event.target.closest('.card')
+
+    if (cardElement) {
+      handler(Number(cardElement.dataset.id))
+    }
+  })
 }

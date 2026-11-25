@@ -151,3 +151,31 @@
   border: 2px solid var(--element-color);
   border-radius: 50%;
 }
+
+/* ===== Состояния карт и мобов ===== */
+.card--selected,
+.card--selected:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 0 0 3px var(--color-accent), 0 8px 20px rgb(0 0 0 / 50%);
+}
+
+.card:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.mob--targetable {
+  cursor: crosshair;
+}
+
+.mob--targetable:hover {
+  box-shadow: 0 0 0 3px var(--color-accent);
+}
+
+.mob__preview {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-fire);
+}

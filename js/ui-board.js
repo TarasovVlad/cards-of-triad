@@ -30,7 +30,7 @@ const createHealthBar = (mob) => {
   return healthBar
 }
 
-const createMobElement = (mob) => {
+const createMobElement = (mob, damagePreview) => {
   const mobElement = createElement('button', 'mob')
   mobElement.type = 'button'
   mobElement.dataset.id = mob.id
@@ -44,11 +44,16 @@ const createMobElement = (mob) => {
     createElement('span', 'mob__stats', `❤️ ${mob.health}/${mob.maxHealth}  ⚔️ ${mob.attack}`),
   )
 
+  if (damagePreview !== null) {
+    mobElement.classList.add('mob--targetable')
+    mobElement.append(createElement('span', 'mob__preview', `−${damagePreview}`))
+  }
+
   return mobElement
 }
 
-export const renderMobs = (state) => {
-  const mobElements = state.table.map((mob) => createMobElement(mob))
+export const renderMobs = (state, getDamagePreview) => {
+  const mobElements = state.table.map((mob) => createMobElement(mob, getDamagePreview(mob)))
   mobsElement.replaceChildren(...mobElements)
 }
 
@@ -62,4 +67,14 @@ export const renderQueue = (state) => {
   })
 
   queueElement.replaceChildren(...queueItems)
+}
+
+export const onMobClick = (handler) => {
+  mobsElement.addEventListener('click', (event) => {
+    const mobElement = event.target.closest('.mob')
+
+    if (mobElement) {
+      handler(Number(mobElement.dataset.id))
+    }
+  })
 }
