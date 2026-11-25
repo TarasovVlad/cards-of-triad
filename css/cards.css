@@ -1,0 +1,80 @@
+/* Внешний вид карт игрока и мобов. */
+
+:root {
+  --card-width: 120px;
+  --card-height: 170px;
+}
+
+/* ===== Цвет стихии берётся из data-element ===== */
+[data-element='fire'] {
+  --element-color: var(--color-fire);
+}
+
+[data-element='water'] {
+  --element-color: var(--color-water);
+}
+
+[data-element='nature'] {
+  --element-color: var(--color-nature);
+}
+
+/* ===== Карта игрока ===== */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: 14px 8px 10px;
+  font: inherit;
+  color: var(--color-text);
+  text-align: center;
+  background: linear-gradient(160deg, var(--color-surface), var(--color-bg));
+  border: 2px solid var(--element-color);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 16px rgb(0 0 0 / 40%);
+}
+
+.card__cost {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-weight: 700;
+  color: var(--color-text-on-accent);
+  background: var(--color-accent);
+  border-radius: 50%;
+}
+
+.card__element {
+  font-size: 2rem;
+}
+
+.card__name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.card__type {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.card__power {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
