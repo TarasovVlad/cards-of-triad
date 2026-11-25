@@ -48,10 +48,20 @@ const spendCard = (card) => {
   discardCard(state.deck, card.id)
 }
 
+const playShield = (card) => {
+  state.armor += card.power
+  spendCard(card)
+}
+
 export const useCard = (cardId) => {
   const card = findCardInHand(cardId)
 
   if (!card || card.cost > state.energy) {
+    return
+  }
+
+  if (card.type === 'shield') {
+    playShield(card)
     return
   }
 
