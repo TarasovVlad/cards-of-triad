@@ -1,7 +1,7 @@
 import { config } from './config.js'
 import { cards } from './cards.js'
 import { createDeck, drawCards, discardCard, discardHand } from './deck.js'
-import { createWave } from './mobs.js'
+import { createWave, waves } from './mobs.js'
 import { calculateDamage } from './rules.js'
 
 let state = null
@@ -12,6 +12,19 @@ const fillTable = () => {
   while (state.table.length < config.tableSize && state.queue.length > 0) {
     state.table.push(state.queue.shift())
   }
+}
+
+const isWaveCleared = () => state.table.length === 0 && state.queue.length === 0
+
+const isLastWave = () => state.waveIndex === waves.length - 1
+
+const startNextWave = () => {
+  if (!isWaveCleared() || isLastWave()) {
+    return
+  }
+
+  state.waveIndex += 1
+  state.queue = createWave(state.waveIndex)
 }
 
 const startTurn = () => {
@@ -102,6 +115,7 @@ export const endTurn = () => {
   state.health = Math.max(0, state.health - takenDamage)
   state.selectedCardId = null
   discardHand(state.deck)
+  startNextWave()
   fillTable()
   startTurn()
 
