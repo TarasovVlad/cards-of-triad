@@ -18,6 +18,14 @@ const isWaveCleared = () => state.table.length === 0 && state.queue.length === 0
 
 const isLastWave = () => state.waveIndex === waves.length - 1
 
+const updateStatus = () => {
+  if (state.health === 0) {
+    state.status = 'lost'
+  } else if (isWaveCleared() && isLastWave()) {
+    state.status = 'won'
+  }
+}
+
 const startNextWave = () => {
   if (!isWaveCleared() || isLastWave()) {
     return
@@ -45,6 +53,7 @@ export const startGame = () => {
     queue: createWave(0),
     table: [],
     selectedCardId: null,
+    status: 'playing',
   }
 
   fillTable()
@@ -103,6 +112,7 @@ export const attackMob = (mobId) => {
   mob.health = Math.max(0, mob.health - damage)
   state.table = state.table.filter((tableMob) => tableMob.health > 0)
   spendCard(card)
+  updateStatus()
 
   return { damage, isKilled: mob.health === 0 }
 }
@@ -115,9 +125,13 @@ export const endTurn = () => {
   state.health = Math.max(0, state.health - takenDamage)
   state.selectedCardId = null
   discardHand(state.deck)
-  startNextWave()
-  fillTable()
-  startTurn()
+  updateStatus()
+
+  if (state.status === 'playing') {
+    startNextWave()
+    fillTable()
+    startTurn()
+  }
 
   return { takenDamage, blockedDamage }
 }

@@ -1,4 +1,4 @@
-import { showScreen } from './screens.js'
+import { showScreen, showResult } from './screens.js'
 import { startGame, getState, useCard, attackMob, getDamagePreview, endTurn } from './game.js'
 import { renderHud, renderMobs, renderQueue, onMobClick } from './ui-board.js'
 import { renderHand, onCardClick } from './ui-cards.js'
@@ -17,6 +17,16 @@ const render = () => {
   renderHand(state)
 }
 
+const finishGameIfOver = () => {
+  const state = getState()
+
+  if (state.status === 'playing') {
+    return
+  }
+
+  showResult(state)
+}
+
 const startNewGame = () => {
   startGame()
   render()
@@ -29,6 +39,7 @@ menuButton.addEventListener('click', () => showScreen('menu'))
 endTurnButton.addEventListener('click', () => {
   endTurn()
   render()
+  finishGameIfOver()
 })
 
 onCardClick((cardId) => {
@@ -39,4 +50,5 @@ onCardClick((cardId) => {
 onMobClick((mobId) => {
   attackMob(mobId)
   render()
+  finishGameIfOver()
 })
