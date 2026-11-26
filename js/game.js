@@ -1,6 +1,6 @@
 import { config } from './config.js'
 import { cards } from './cards.js'
-import { createDeck, drawCards, discardCard } from './deck.js'
+import { createDeck, drawCards, discardCard, discardHand } from './deck.js'
 import { createWave } from './mobs.js'
 import { calculateDamage } from './rules.js'
 
@@ -92,4 +92,18 @@ export const attackMob = (mobId) => {
   spendCard(card)
 
   return { damage, isKilled: mob.health === 0 }
+}
+
+export const endTurn = () => {
+  const incomingDamage = state.table.reduce((sum, mob) => sum + mob.attack, 0)
+  const blockedDamage = Math.min(state.armor, incomingDamage)
+  const takenDamage = incomingDamage - blockedDamage
+
+  state.health = Math.max(0, state.health - takenDamage)
+  state.selectedCardId = null
+  discardHand(state.deck)
+  fillTable()
+  startTurn()
+
+  return { takenDamage, blockedDamage }
 }
