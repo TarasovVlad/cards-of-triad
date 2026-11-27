@@ -1,6 +1,6 @@
 import { showScreen, showResult } from './screens.js'
 import { startGame, getState, useCard, attackMob, getDamagePreview, endTurn } from './game.js'
-import { renderHud, renderMobs, renderQueue, onMobClick } from './ui-board.js'
+import { renderHud, renderMobs, renderQueue, renderTriad, onMobClick } from './ui-board.js'
 import { renderHand, onCardClick } from './ui-cards.js'
 
 const playButton = document.querySelector('#play-button')
@@ -14,6 +14,7 @@ const render = () => {
   renderHud(state)
   renderMobs(state, getDamagePreview)
   renderQueue(state)
+  renderTriad(state)
   renderHand(state)
 }
 

@@ -179,3 +179,45 @@
   font-weight: 700;
   color: var(--color-fire);
 }
+
+/* ===== Триада ===== */
+.card--triad {
+  box-shadow: 0 0 14px var(--color-accent);
+}
+
+.card--triad::after {
+  content: '×2';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-on-accent);
+  background: var(--color-accent);
+  border-radius: 8px;
+}
+
+.triad {
+  align-items: center;
+}
+
+.triad__label {
+  margin-right: 4px;
+  color: var(--color-text-muted);
+}
+
+.triad__slot {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-text-muted);
+  border: 2px dashed var(--color-border);
+  border-radius: 50%;
+}
+
+.triad__slot--filled {
+  border-style: solid;
+  border-color: var(--color-accent);
+}

@@ -4,6 +4,7 @@ import { createElement } from './dom.js'
 
 const mobsElement = document.querySelector('#mobs')
 const queueElement = document.querySelector('#mob-queue')
+const triadElement = document.querySelector('#triad')
 
 const hud = {
   health: document.querySelector('#player-hp'),
@@ -77,4 +78,17 @@ export const onMobClick = (handler) => {
       handler(Number(mobElement.dataset.id))
     }
   })
+}
+
+export const renderTriad = (state) => {
+  const slots = []
+
+  for (let i = 0; i < config.triadSize; i += 1) {
+    const chainElement = state.triadChain[i]
+    const slot = createElement('span', 'triad__slot', chainElement ? elements[chainElement].icon : '?')
+    slot.classList.toggle('triad__slot--filled', Boolean(chainElement))
+    slots.push(slot)
+  }
+
+  triadElement.replaceChildren(createElement('span', 'triad__label', 'Триада'), ...slots)
 }

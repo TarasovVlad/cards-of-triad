@@ -1,6 +1,7 @@
 import { elements } from './config.js'
 import { cardTypes } from './cards.js'
 import { createElement } from './dom.js'
+import { isTriadMove } from './rules.js'
 
 const handElement = document.querySelector('#hand')
 
@@ -12,6 +13,7 @@ const createCardElement = (card, state) => {
   cardElement.dataset.type = card.type
   cardElement.disabled = card.cost > state.energy
   cardElement.classList.toggle('card--selected', card.id === state.selectedCardId)
+  cardElement.classList.toggle('card--triad', isTriadMove(state.triadChain, card.element))
 
   cardElement.append(
     createElement('span', 'card__cost', card.cost),

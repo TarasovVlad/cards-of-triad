@@ -17,3 +17,16 @@ export const calculateDamage = (power, attackElement, targetElement) => {
 
   return Math.floor(power * multiplier)
 }
+
+export const isTriadMove = (chain, element) =>
+  chain.length === config.triadSize - 1 && !chain.includes(element)
+
+export const getNextTriadChain = (chain, element) => {
+  if (chain.includes(element)) {
+    return [element]
+  }
+
+  const nextChain = [...chain, element]
+
+  return nextChain.length === config.triadSize ? [] : nextChain
+}

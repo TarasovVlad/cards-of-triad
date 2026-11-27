@@ -2,7 +2,7 @@ import { config } from './config.js'
 import { cards } from './cards.js'
 import { createDeck, drawCards, discardCard, discardHand } from './deck.js'
 import { createWave, waves } from './mobs.js'
-import { calculateDamage } from './rules.js'
+import { calculateDamage, isTriadMove, getNextTriadChain } from './rules.js'
 
 let state = null
 
@@ -39,6 +39,7 @@ const startTurn = () => {
   state.turn += 1
   state.energy = config.energyPerTurn
   state.armor = 0
+  state.triadChain = []
   drawCards(state.deck, config.handSize)
 }
 
@@ -53,6 +54,7 @@ export const startGame = () => {
     queue: createWave(0),
     table: [],
     selectedCardId: null,
+    triadChain: [],
     status: 'playing',
   }
 
@@ -64,14 +66,21 @@ const findCardInHand = (cardId) => state.deck.hand.find((card) => card.id === ca
 
 const findMobOnTable = (mobId) => state.table.find((mob) => mob.id === mobId)
 
+const getCardPower = (card) => {
+  const isTriad = isTriadMove(state.triadChain, card.element)
+
+  return isTriad ? card.power * config.triadMultiplier : card.power
+}
+
 const spendCard = (card) => {
   state.energy -= card.cost
   state.selectedCardId = null
+  state.triadChain = getNextTriadChain(state.triadChain, card.element)
   discardCard(state.deck, card.id)
 }
 
 const playShield = (card) => {
-  state.armor += card.power
+  state.armor += getCardPower(card)
   spendCard(card)
 }
 
@@ -97,7 +106,7 @@ export const getDamagePreview = (mob) => {
     return null
   }
 
-  return calculateDamage(card.power, card.element, mob.element)
+  return calculateDamage(getCardPower(card), card.element, mob.element)
 }
 
 export const attackMob = (mobId) => {
